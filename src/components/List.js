@@ -1,13 +1,24 @@
+const List = ({activities}) => {
 
-const List = ({activity, handleChange}) => {
 
+
+
+	const handleChange = () => {
+
+	}
 	return (
-		<li>
-			<input type="text" value={activity}
-				   className={"h-[59px] border border-b-[#dbdbdb] w-full outline-none"}
-				   onChange={handleChange}
-			/>
-		</li>
+		<ul>
+			{activities.map((activity, index) =>
+				<li key={index}>
+					<input type="text"
+						   name="todo"
+						   className={"h-[59px] border border-b-[#dbdbdb] w-full outline-none"}
+						   onChange={(e) => handleChange(e.target.value)}
+						   value={activity.todo}
+					/>
+				</li>
+			)}
+		</ul>
 	)
 }
 
