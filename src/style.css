@@ -3,8 +3,39 @@
 @tailwind utilities;
 
 
-html{
+html {
     @apply bg-gray-400
 }
 
 
+.li-class:last-child {
+    /*@apply rounded-b-lg*/
+}
+
+#remove::after {
+    display: none;
+    content: "\00d7";
+    font-size: 40px;
+    line-height: 30px;
+    color: #ff8686;
+}
+
+
+.li-class:hover #remove::after {
+    display: block;
+
+}
+
+#remove:hover::after {
+    color: red;
+
+}
+
+
+.active-button {
+    @apply bg-gray-200
+}
+
+.menu {
+    @apply transition-all hover:bg-gray-200
+}

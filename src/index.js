@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import "./style.css"
-import Todos from "./components/Todos";
+import Todos2 from "./components/Todos2";
 const App = () => {
 	return (
-		<Todos/>
+		<Todos2/>
 	)
 }
 
