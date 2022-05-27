@@ -1,10 +1,8 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import Form from "./Form";
 import List from "./List";
 
 const Todos = () => {
-
-
 	const [activities, setActivites] = useState([
 		{todo: "Code furiously", done: false},
 		{todo: "Promote Mavo", done: false},
@@ -13,37 +11,12 @@ const Todos = () => {
 		{todo: "Have a life!", done: false},
 	])
 
-
-	const initialLen = activities.filter(e => e.done === false).length
-	const [len, setLen] = useState(initialLen)
-
-	const update = (e) => {
-		activities.map(obj => {
-			if (obj.todo === e) {
-				obj.done = !obj.done
-			}
-		})
-		const arr = activities.filter(act => act.done === false).length
-		setLen(arr)
-
-		//cond güncellemesi
-
-	}
-
-
-	const remove = (act) => {
-		const arr = activities.filter(e => e.todo !== act)
-		setActivites(arr)
-		setLen(arr.length)
-	}
-
-
-	const [condition, setCondition] = useState("all")
-	const [showingArr, setShowingArr] = useState(activities)
+	const [select, setSelect] = useState("all")
 
 
 	const menuButton = (e) => {
 		const choice = e.target.id
+		setSelect(choice)
 		document.querySelectorAll(".menu").forEach(btn => {
 			if (btn.id === choice) {
 				btn.classList.add("active-button")
@@ -51,26 +24,31 @@ const Todos = () => {
 				btn.classList.remove("active-button")
 			}
 		})
+	}
 
-		if (choice === "all") {
-			setCondition("all")
-		} else if (choice === "active") {
-			setCondition("active")
+	const condition = (e) => {
+		if (select === "all") {
+			return e
+		} else if (select === "active") {
+			return e.done === false
 		} else {
-			setCondition("completed")
+			return e.done === true
 		}
+	}
 
+	const clearCompleted = () => {
+		const arr = activities.filter(e => e.done === false)
+		setActivites(arr)
 	}
 
 
 	return (
 		<div className={"w-[700px] bg-white rounded-lg ml-[calc(calc(100%_-_700px)/2)] mt-20"}>
-
-			<Form addActivities={setActivites} activities={activities}/>
-			<List activities={activities} update={update} remove={remove} sendLen={setLen} condition={condition} showingArr={showingArr}/>
+			<Form activities={activities} setActivity={setActivites}/>
+			<List activities={activities} setActivity={setActivites} selected={select}/>
 			<div className={"flex flex-row p-2"}>
 				<div className={"basis-1/4  flex justify-start"}>
-					<p className={"text-gray-700"}>{len} items left</p>
+					<p className={"text-gray-700"}>{activities.filter(e => condition(e)).length} items left</p>
 				</div>
 				<div className={"basis-1/2 flex justify-around"}>
 					<button onClick={menuButton} id="all"
@@ -84,7 +62,9 @@ const Todos = () => {
 					</button>
 				</div>
 				<div className={"basis-1/4 flex justify-end"}>
-					<button className={"border border-red-100 bg-red-500 text-white rounded-lg px-3"}>Clear Completed
+					<button onClick={clearCompleted}
+							className={"border border-red-100 bg-red-500 text-white rounded-lg px-3"}>
+						Clear Completed
 					</button>
 				</div>
 			</div>

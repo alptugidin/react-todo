@@ -1,32 +1,41 @@
 import {useState} from "react";
 
-const Form = ({addActivities, activities}) => {
+const Form = ({setActivity, activities}) => {
+	const [form, setForm] = useState({todo: "", done: false})
 
-	const initialState = {todo: ""}
-	const [form, setForm] = useState(initialState)
-
-	const handleChange = (e) => {
-		setForm({todo: e.target.value})
-	}
-
-	const handleSubmit = (e) => {
+	const submitActivity = (e) => {
+		const duplicateCheck = activities.find(e => e.todo === form.todo)
 		e.preventDefault()
-		if (form.todo  === ""){
+		if (form.todo === "" || duplicateCheck !== undefined) {
 			return false
 		}
 
-		addActivities([...activities, form])
-		setForm(initialState)
+
+		setActivity([...activities, form])
+		setForm({todo: "", done: false})
+	}
+
+	const update = (e) => {
+		setForm({todo: e.target.value, done: false})
+	}
+
+	const makeAllCompleted = () => {
+		const arr = activities.map(e => {
+			e.done = true
+			return e
+		})
+
+		setActivity(arr)
 	}
 
 	return (
-		<form onSubmit={handleSubmit} action="" className={"relative"}>
-			<img src="/dd.svg" alt="" className={"absolute left-2 top-6 w-[18px]"}/>
+		<form action="" className={"relative"} onSubmit={submitActivity}>
+			<img onClick={makeAllCompleted} src="/dd.svg" alt="" className={"absolute left-2 top-6 w-[18px]"}/>
 			<input placeholder="What needs to be done?"
 				   autoComplete={"off"}
 				   className={"w-full outline-none h-[60px] shadow shadow-md hover:shadow-sm transition-all text-2xl rounded-t-lg pl-10"}
 				   name="todo"
-				   onChange={handleChange}
+				   onChange={update}
 				   value={form.todo}
 			/>
 		</form>
@@ -35,3 +44,4 @@ const Form = ({addActivities, activities}) => {
 }
 
 export default Form
+

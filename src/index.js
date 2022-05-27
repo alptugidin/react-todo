@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import "./style.css"
-import Todos2 from "./components/Todos2";
+import Todos from "./components/Todos";
+
 const App = () => {
 	return (
-		<Todos2/>
+		// <React.StrictMode>
+			<Todos/>
+		// </React.StrictMode>
 	)
 }
 
