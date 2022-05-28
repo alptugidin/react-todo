@@ -8,8 +8,8 @@ html {
 }
 
 
-.li-class:last-child {
-    /*@apply rounded-b-lg*/
+#main-input {
+    border-bottom: 1px solid #dbdbdb;
 }
 
 #remove::after {
@@ -38,4 +38,8 @@ html {
 
 .menu {
     @apply transition-all hover:bg-gray-200
+}
+
+.li-class{
+    border-bottom: 1px solid #dbdbdb;
 }
